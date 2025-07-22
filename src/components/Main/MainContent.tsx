@@ -4,6 +4,7 @@ import {images} from "../../assets/images.ts";
 
 interface contentComponentPropsType {
     name: string;
+    price: number;
     image_path_front: string;
     image_path_back: string;
 }
@@ -15,9 +16,10 @@ export const MainContent = () => {
     const itemslist: contentComponentPropsType[] = []
 
     const testItem = {
-        name: "Test",
+        name: "Лонгслив Pussycat Luv Green",
         image_path_front: "src/assets/images/test.png",
         image_path_back: "",
+        price: 12000,
     }
     itemslist.push(testItem);
     itemslist.push(testItem);
@@ -30,26 +32,40 @@ export const MainContent = () => {
 
 
     const ItemComponent = ( props: contentComponentPropsType ) => {
+
+        const price_str = String(props.price) + '₽';
+
+        console.log(price_str);
+
         return (
-            <button
-                onClick={() => {
-                    navigate('/item');
-                }}
-                className="flex relative h-[300px] w-[calc(25%-30px)] "
-            >
-                <img className="w-full z-1 h-full absolute flex" src={props.image_path_front} alt="товар"/>
-            </button>
+            <div className="flex flex-col gap-[15px] w-[calc(33%-30px)]">
+                <button
+                    onClick={() => {
+                        navigate('/item');
+                    }}
+                    className="flex h-[400px] cursor-pointer"
+                >
+                    <img className="w-full h-full flex" src={props.image_path_front} alt="товар"/>
+                </button>
+               <button className="flex cursor-pointer">
+                   <div className="text-[#000] text-[14px] font-[Consolas]">{props.name}</div>
+               </button>
+                <div className="flex flex-row gap-[5px]">
+                    <div className="text-[#000] text-[14px] font-[Consolas]">{price_str}</div>
+                </div>
+            </div>
         )
     }
 
     return (
-        <div className="mt-[200px] px-[20%] py-[20px] gap-[30px] flex flex-wrap items-start shrink justify-center">
+        <div className="mt-[150px] px-[20%] gap-[30px] flex flex-wrap items-start shrink justify-center">
             {itemslist?.map((item) => (
                 <ItemComponent
                     key={item.name}
-                    name={'test'}
-                    image_path_front={'src/assets/images/example_t.png'}
-                    image_path_back={''}
+                    name={item.name}
+                    image_path_front={item.image_path_front}
+                    image_path_back={item.image_path_back}
+                    price={item.price}
                 ></ItemComponent>
             ))}
         </div>

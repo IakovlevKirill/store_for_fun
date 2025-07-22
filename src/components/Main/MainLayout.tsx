@@ -20,7 +20,7 @@ export const MainLayout = () => {
                         className="flex ml-[10px] cursor-pointer"
                         onClick={() => {navigate('/main')}}
                     >
-                        <img className="h-[70px]" src={images.logo_gif} alt="лого"/>
+                        <img className="mt-[0px] ml-[50px] h-[60px]" src={images.logo} alt="лого"/>
                     </button>
                 </div>
                 <div className="w-[60%]"></div>
