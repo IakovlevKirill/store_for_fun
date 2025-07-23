@@ -3,6 +3,7 @@ import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {incrementItemsInCartCount, setItemsInCartCount} from "../../app/slices/itemsInCartCountSlice.ts";
 import {useAppSelector} from "../../app/hooks.ts";
+import {images} from "../../assets/images.ts";
 
 interface contentComponentPropsType {
     name: string;
@@ -82,16 +83,24 @@ export const MainContent = () => {
     }
 
     return (
-        <div className="mt-[120px] mx-[20%] w-[60%] flex flex-wrap gap-[50px] items-start justify-between">
-            {itemslist?.map((item) => (
-                <ItemComponent
-                    key={item.name}
-                    name={item.name}
-                    image_path_front={item.image_path_front}
-                    image_path_back={item.image_path_back}
-                    price={item.price}
-                ></ItemComponent>
-            ))}
+        <div className="w-[60%] mx-[20%] flex flex-col">
+            <div className="mt-[120px] w-full flex flex-wrap gap-[50px] items-start justify-between">
+                {itemslist?.map((item) => (
+                    <ItemComponent
+                        key={item.name}
+                        name={item.name}
+                        image_path_front={item.image_path_front}
+                        image_path_back={item.image_path_back}
+                        price={item.price}
+                    ></ItemComponent>
+                ))}
+            </div>
+            <div className="mt-[100px] w-full justify-between flex gap-[10px]">
+                <img className="w-[calc(25%-10px)] rounded-[10px]" src={images.image19}></img>
+                <img className="w-[calc(25%-10px)] rounded-[10px]" src={images.image23}></img>
+                <img className="w-[calc(25%-10px)] rounded-[10px]" src={images.image21}></img>
+                <img className="w-[calc(25%-10px)] rounded-[10px]" src={images.image24}></img>
+            </div>
         </div>
     );
 };
