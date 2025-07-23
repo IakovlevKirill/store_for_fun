@@ -1,5 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {incrementItemsInCartCount, setItemsInCartCount} from "../../app/slices/itemsInCartCountSlice.ts";
+import {useAppSelector} from "../../app/hooks.ts";
 
 interface contentComponentPropsType {
     name: string;
@@ -10,14 +13,17 @@ interface contentComponentPropsType {
 
 export const MainContent = () => {
 
+    const items_in_cart_state = useAppSelector((state) => state.itemsInCartCount.itemCount);
+
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const itemslist: contentComponentPropsType[] = []
 
     const testItem = {
         name: "Лонгслив Pussycat Luv Green",
         image_path_front: "src/assets/images/example_white_t.png",
-        image_path_back: "",
+        image_path_back: "src/assets/images/example_t_back.png",
         price: 12000,
     }
     itemslist.push(testItem);
@@ -35,17 +41,24 @@ export const MainContent = () => {
 
         const price_str = String(props.price) + '₽';
 
-        console.log(price_str);
-
         return (
             <div className="z-4 flex flex-col gap-[15px] w-[calc(33.33%-50px)]">
                 <button
-                    onClick={() => {
-                        navigate('/item');
-                    }}
-                    className="flex relative cursor-pointer focus:outline-none"
+                    onClick={() => navigate('/item')}
+                    className="relative group cursor-pointer focus:outline-none"
                 >
-                    <img className="w-full h-full flex" src={props.image_path_front} alt="товар"/>
+                    {/* Первая картинка (всегда видна) */}
+                    <img
+                        className="w-full h-full object-cover transition-opacity duration-400 group-hover:opacity-0"
+                        src={props.image_path_front}
+                        alt="товар"
+                    />
+                    {/* Вторая картинка (видна только при наведении) */}
+                    <img
+                        className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-400"
+                        src={props.image_path_back}
+                        alt="товар"
+                    />
                 </button>
                <button className="flex cursor-pointer focus:outline-none">
                    <div className="text-[#000] text-[16px] font-[Montserrat-medium]">{props.name}</div>
@@ -54,6 +67,9 @@ export const MainContent = () => {
                     <div className="text-[#000] text-[14px] font-[Montserrat-medium]">{price_str}</div>
                 </div>
                 <button
+                    onClick={()=>{
+                        localStorage.setItem("cart_item_count", String(Number(items_in_cart_state) + 1));
+                    }}
                     className="
                     w-full border-[1px] border-[#000] py-[6px] font-[Montserrat-semibold] text-[14px] text-[#000]
                     focus:outline-none
