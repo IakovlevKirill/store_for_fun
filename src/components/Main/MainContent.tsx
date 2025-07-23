@@ -1,6 +1,5 @@
 import React from 'react';
 import {useNavigate} from "react-router-dom";
-import {images} from "../../assets/images.ts";
 
 interface contentComponentPropsType {
     name: string;
@@ -17,10 +16,11 @@ export const MainContent = () => {
 
     const testItem = {
         name: "Лонгслив Pussycat Luv Green",
-        image_path_front: "src/assets/images/test.png",
+        image_path_front: "src/assets/images/example_white_t.png",
         image_path_back: "",
         price: 12000,
     }
+    itemslist.push(testItem);
     itemslist.push(testItem);
     itemslist.push(testItem);
     itemslist.push(testItem);
@@ -38,27 +38,35 @@ export const MainContent = () => {
         console.log(price_str);
 
         return (
-            <div className="flex flex-col gap-[15px] w-[calc(33%-30px)]">
+            <div className="z-4 flex flex-col gap-[15px] w-[calc(33.33%-50px)]">
                 <button
                     onClick={() => {
                         navigate('/item');
                     }}
-                    className="flex h-[400px] cursor-pointer"
+                    className="flex relative cursor-pointer focus:outline-none"
                 >
                     <img className="w-full h-full flex" src={props.image_path_front} alt="товар"/>
                 </button>
-               <button className="flex cursor-pointer">
-                   <div className="text-[#000] text-[14px] font-[Consolas]">{props.name}</div>
+               <button className="flex cursor-pointer focus:outline-none">
+                   <div className="text-[#000] text-[16px] font-[Montserrat-medium]">{props.name}</div>
                </button>
                 <div className="flex flex-row gap-[5px]">
-                    <div className="text-[#000] text-[14px] font-[Consolas]">{price_str}</div>
+                    <div className="text-[#000] text-[14px] font-[Montserrat-medium]">{price_str}</div>
                 </div>
+                <button
+                    className="
+                    w-full border-[1px] border-[#000] py-[6px] font-[Montserrat-semibold] text-[14px] text-[#000]
+                    focus:outline-none
+                    hover:bg-[#000] hover:text-[#F4F4F4] transition-colors duration-200"
+                >
+                    В корзину
+                </button>
             </div>
         )
     }
 
     return (
-        <div className="mt-[150px] px-[20%] gap-[30px] flex flex-wrap items-start shrink justify-center">
+        <div className="mt-[120px] mx-[20%] w-[60%] flex flex-wrap gap-[50px] items-start justify-between">
             {itemslist?.map((item) => (
                 <ItemComponent
                     key={item.name}
