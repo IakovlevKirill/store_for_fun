@@ -4,8 +4,12 @@ import {images} from "../../assets/images.ts";
 import {useDispatch} from "react-redux";
 import {setItemsInCartCount} from "../../app/slices/itemsInCartCountSlice.ts";
 import {useAppSelector} from "../../app/hooks.ts";
+import {CartSidebar} from "../CartSidebar.tsx";
+import {changeSidebarVisibility} from "../../app/slices/CartSidebarVisibilitySlice.ts";
 
 export const MainLayout = () => {
+
+    const isSideBarVisible = useAppSelector((state) => state.cartSidebarVisibility.isVisible);
 
     const items_in_cart_state = useAppSelector((state) => state.itemsInCartCount.itemCount);
 
@@ -51,7 +55,9 @@ export const MainLayout = () => {
                     <div>поддержка с 12:00 по 20:00</div>
                     <button
                         className="relative w-[35px] h-[35px] flex cursor-pointer focus:outline-none"
-                    onClick={() => navigate('/cart')}
+                        onClick={() => {
+                            dispatch(changeSidebarVisibility(!isSideBarVisible));
+                        }}
                     >
                         <img className="cursor-pointer" src={images.cart} alt="">
 
@@ -80,6 +86,7 @@ export const MainLayout = () => {
     return (
         <div className="w-full justify-between min-h-screen flex flex-col">
             <Header></Header>
+            <CartSidebar></CartSidebar>
             <Outlet></Outlet>
             <Footer></Footer>
         </div>

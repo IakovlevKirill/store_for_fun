@@ -4,6 +4,7 @@ import {useDispatch} from "react-redux";
 import {incrementItemsInCartCount, setItemsInCartCount} from "../../app/slices/itemsInCartCountSlice.ts";
 import {useAppSelector} from "../../app/hooks.ts";
 import {images} from "../../assets/images.ts";
+import {addItemToCart} from "../../app/slices/ItemsInCartSlice.ts";
 
 interface contentComponentPropsType {
     name: string;
@@ -70,6 +71,12 @@ export const MainContent = () => {
                 <button
                     onClick={()=>{
                         localStorage.setItem("cart_item_count", String(Number(items_in_cart_state) + 1));
+                        dispatch(incrementItemsInCartCount())
+                        dispatch(addItemToCart({
+                            name: props.name,
+                            price: props.price,
+                        }))
+
                     }}
                     className="
                     w-full border-[1px] border-[#000] py-[6px] font-[Montserrat-semibold] text-[14px] text-[#000]
